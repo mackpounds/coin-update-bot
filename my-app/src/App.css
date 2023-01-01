@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+  font-family: "Montserrat Alternates", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.app_header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.main-container{
+  border: 0;
+  border-radius: 15px;
+  background-color: #6c7c89;
+  padding: 16px;
+  line-height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.App-name{
+  color: #282c34;
+}
+.sub-text{
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.coin-name-content{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.coin-name-layout, .coin-holding-layout{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0 0 0;
+  gap: 8px;
+}
+.coin-name, .coin-holding-layout #holdings{
+  padding: 8px;
+  border: 0;
+  border-radius: 7px;
+  outline: none;
+  caret-color: #282c34;
+  font-family: monospace;
+  color: #282c34;
+}
+::placeholder{
+    font-family: "Montserrat Alternates", sans-serif;
+  }
+ button{
+  padding: 6px 12px;
+  border-radius: 7px;
+  outline: none;
+  background-color: #282c34;
+  color: azure;
+  border: none;
+}
+
+.coin-holding-layout label{
+  font-size: 12px;
+  line-height: 1px;
+}
+
+.btn-section{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}

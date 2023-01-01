@@ -92,7 +92,7 @@ def main():
     #last price
     last_price = -1
 
-    above_threshold = 0.4800
+    above_threshold = 0.5000
     below_threshold = 0.4500
     alert_set_up = False
     alert_set_down = False
