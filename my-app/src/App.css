@@ -20,7 +20,7 @@
 
 .main-container{
   border: 0;
-  /*width: 30%;*/
+  width: 290px;
   max-width: 400px;
   min-width: 300px;
   min-height: 300px;
@@ -33,11 +33,15 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
+  overflow: hidden;
 }
 .App-name{
   color: #282c34;
 }
 .sub-text{
+  justify-self: start;
+  align-self: start;
+  text-align: center;
   font-size: 13px;
   letter-spacing: 2px;
 }
@@ -80,7 +84,7 @@ i{
 @keyframes slideLeft {
   0%{
     opacity: 0;
-    transform: translateX(20px);
+    transform: translateX(260px);
   }
   100%{
     opacity: 1;
@@ -90,7 +94,7 @@ i{
 @keyframes slideRight {
   0%{
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateX(-260px);
   }
   100%{
     opacity: 1;
@@ -124,7 +128,7 @@ i{
    background-color: azure;
    color: #282c34;
    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 10px rgba(55, 225, 225, 0.4);
-   transition: box-shadow 0.3s ease;
+   transition: all 0.3s ease;
  }
 .price-update {
   width: 100%;
