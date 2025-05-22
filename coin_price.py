@@ -79,10 +79,13 @@ def send_mail(html, last_price):
     msg.attach(MTobj)
 
     context = ssl.create_default_context()
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
-        server.login(sender, password)
-        server.sendmail(sender, receiver, msg.as_string())
-        print(f'Email Sent SUCCESSFULLY. The Current {crypto} Price is ', last_price)
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
+            server.login(sender, password)
+            server.sendmail(sender, receiver, msg.as_string())
+            print(f'Email Sent SUCCESSFULLY. The Current {crypto} Price is ', last_price)
+    except Exception as e:
+        print("The Staus is down, Cause: ", e)
 
 
 def main():
