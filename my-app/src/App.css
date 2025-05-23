@@ -6,7 +6,9 @@
   box-sizing: border-box;
 }
 .app_header {
+  width: 100%;
   background-color: #282c34;
+  padding: 40px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -18,8 +20,9 @@
 
 .main-container{
   border: 0;
+  /*width: 30%;*/
   max-width: 400px;
-  min-width: 400px;
+  min-width: 300px;
   min-height: 300px;
   border-radius: 15px;
   background-color: #6c7c89;
@@ -56,7 +59,7 @@ i{
   gap: 10px;
 }
 
-.coin-name-layout, .coin-holding-layout, .holder-email-layout, .coin-threshold-layout, .code-authenticator-layout, .coin-price-layout{
+.parent{
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -65,16 +68,36 @@ i{
   padding: 12px 0 0 0;
   gap: 8px;
   opacity: 0;
-  animation: fadeIn 1s ease-in-out forwards;
 }
-@keyframes fadeIn {
+.parent.next{
+  opacity: 0;
+  animation: slideLeft 0.5s ease-in-out forwards;
+}
+.parent.back{
+  opacity: 0;
+  animation: slideRight 0.5s ease-in-out forwards;
+}
+@keyframes slideLeft {
   0%{
     opacity: 0;
+    transform: translateX(20px);
   }
   100%{
     opacity: 1;
+    transform: translateX(0);
   }
 }
+@keyframes slideRight {
+  0%{
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .coin-name, #holdings, #user-email, #user-password, #user-confirm-pass, #up-threshold, #down-threshold, #code-input{
   width: 100%;
   padding: 8px;
@@ -100,6 +123,8 @@ i{
  button:hover{
    background-color: azure;
    color: #282c34;
+   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 10px rgba(55, 225, 225, 0.4);
+   transition: box-shadow 0.3s ease;
  }
 .price-update {
   width: 100%;
