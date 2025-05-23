@@ -1,8 +1,33 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+    // send the input details to python for security
+    const handleSubmit = async () => {
+        const formData ={
+            coinName,
+            holdings,
+            upThreshold,
+            downThreshold,
+            userEmail,
+            userPassword,
+            userConfirmPass,
+            codeAuth,
+        }
+
+        const response = await fetch("http://localhost:5000/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+        const result = await response.json();
+        console.log(result.message)
+    }
+
+
     // For the form indexes
     const [step, setSteps] = useState(0)
     // for Next | back buttons
@@ -16,6 +41,7 @@ function App() {
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
     const [userConfirmPass, setUserConformPass] = useState("")
+    const [codeAuth, setCodeAuth] = useState("")
 
 
 
@@ -222,14 +248,28 @@ function App() {
 
             {step === 5 && (
             <div className={getClass(5)}>
-                <label htmlFor="code-input" className="code-label">
+                <label
+                    htmlFor="code-input"
+                    className="code-label">
                     Please input the 4-digit code we sent to your email.
-                    <input type="text" name="code-input" id="code-input" placeholder="0000" />
+                    <input
+                        type="text"
+                        name="code-input"
+                        value={codeAuth}
+                        onChange={(e) => setCodeAuth(e.target.value)}
+                        id="code-input"
+                        placeholder="0000"
+                    />
                 </label>
-                    <p className="code-info"><i className="fa-solid fa-info-circle"></i> Please wait one minutes before requesting for another code.</p>
+                    <p className="code-info"><i className="fa-solid fa-info-circle"></i>
+                        Please wait one minutes before requesting for another code.</p>
                     <div className="btn-section">
                        <span className="resend-code">Resend code</span>
-                      <button onClick={nextStep} className="move-from-holdings">Done <i className="fa-solid fa-check"></i></button>
+                      <button
+                          onClick={handleSubmit}
+                          className="move-from-holdings">
+                          Done <i className="fa-solid fa-check"></i>
+                      </button>
                   </div>
 
             </div>
