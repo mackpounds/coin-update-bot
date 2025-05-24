@@ -1,7 +1,33 @@
-import React, { useState } from 'react';
+import axios from "axios";
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+
+    // Function to fetch Coins name to ensure there valid crypto coins the user is inputing
+     // Ensuring the performance of the input is strictly strong.
+    // d5c2ded4-4495-4e8b-ba83-aadb0fb03d44
+
+
+    // function CoinList() {
+        const [coins, setCoins] = useState<string[]>([]);
+
+        useEffect(() => {
+            const fetchCoins = async () => {
+                try{
+                    const response = await fetch("http://localhost:5000/coins")
+                    const data = await response.json()
+                    setCoins(data.coins)
+                } catch (error) {
+                    console.error("Error fetching coin :", error)
+                }
+            };
+
+            fetchCoins();
+        }, []);
+    // }
+
+
 
     // send the input details to python for security
     const handleSubmit = async () => {
@@ -28,6 +54,7 @@ function App() {
     }
 
 
+
     // For the form indexes
     const [step, setSteps] = useState(0)
     // for Next | back buttons
@@ -45,6 +72,9 @@ function App() {
 
 
 
+
+
+    // action button, move next | back
     const nextStep = () => {
         setDirection("next")
         setSteps(prev => Math.max(prev + 1, 0));
@@ -124,8 +154,12 @@ function App() {
             {step === 2 && (
             <div className={getClass(2)}>
                 <div className="price-update">
-                    <span className="price-alert">
+                    <span className="price-alert" title={}>
                         Your <code>coin</code> current price is now <code>$2000</code>
+                        {coins.map((coins, index) => (
+                            <li key={index}>{coins} </li>
+                        ))}
+
                     </span>
                 </div>
                 <div className="btn-section">
