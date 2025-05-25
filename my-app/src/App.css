@@ -18,6 +18,97 @@
   color: white;
 }
 
+.card-popup-container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  scale: 0.8;
+  transition: all 0.5s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.card-popup-container.active{
+  scale: 1;
+  opacity: 1;
+  z-index: 10;
+  transition: all 0.5s ease;
+  pointer-events: auto;
+}
+.card-container{
+  width: 270px;
+  height: 87dvh;
+  padding: 0 0 38px 0;
+  border-radius: 6px;
+  border: 1px solid #666666;
+  background-color: #333;
+  background-image: url("./image/background-noise.png");
+  background-repeat: repeat;
+  overflow: hidden;
+}
+.coin-name-list{
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 10px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.coin-name-list .fa-search{
+  font-size: 19px;
+  cursor: pointer;
+}
+.coin-list-content{
+  width: 100%;
+  height: 100%;
+  padding: 8px 0 35px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  overflow: auto;
+}
+.coin-list-content li{
+  width: 100%;
+  list-style: decimal;
+  font-size: 15px;
+}
+.search-container{
+  opacity: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 12px;
+  overflow: hidden;
+  height: 0;
+  transition: all 0.3s ease;
+  /*background-color: maroon;*/
+}
+.search-container.active{
+  opacity: 1;
+  transition: all 0.3s ease;
+  height: 25px;
+}
+.search-container input{
+  width: 100%;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #ccc;
+  background-color: rgba(0,0,0,0.3);
+  padding: 3px 8px;
+  color: white;
+}
+
 .main-container{
   border: 0;
   width: 290px;
@@ -116,6 +207,55 @@ i{
 ::placeholder{
     font-family: "Montserrat Alternates", sans-serif;
   }
+
+.input-container{
+  width: 100%;
+  height: 31px;
+  padding: 0 3px 0 0;
+  border: 0;
+  border-radius: 7px;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  gap: 5px;
+  align-items: end;
+}
+.input-container input{
+  width: 90%;
+  padding: 8px;
+  border: none;
+  border-radius: 7px;
+  outline: none;
+  caret-color: #282c34;
+  font-family: monospace;
+  background-color: transparent;
+  color: #282c34;
+}
+.input-container .help-icon{
+  width: 28px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*padding: 5px;*/
+  border-radius: 100vw;
+  margin: 2px 2px 3px 2px;
+  cursor: pointer;
+  color: aliceblue;
+  background-color: rgba(57, 57, 58, 0.6);
+}
+.input-container .help-icon:hover{
+  transition: all 0.3s ease;
+  scale: 0.9;
+  background-color: rgba(57, 57, 58, 0.8);
+}
+.input-container .help-icon:hover i{
+  color: aliceblue;
+}
+.input-container .help-icon i{
+  text-align: center;
+}
+
  button{
   padding: 6px 12px;
   border-radius: 7px;
@@ -123,6 +263,7 @@ i{
   background-color: #282c34;
   color: azure;
   border: none;
+   cursor: pointer;
 }
  button:hover{
    background-color: azure;
@@ -143,7 +284,7 @@ i{
   line-height: 30px;
 }
 
- .label-holding-coin, .label-email, .label-password, .label-confirm-pass, .label-threshold-up , .label-threshold-down, .threshold-info, .code-label, .code-info{
+ .label-coin-name, .label-holding-coin, .label-email, .label-password, .label-confirm-pass, .label-threshold-up , .label-threshold-down, .threshold-info, .code-label, .code-info{
    width: 100%;
    text-align: start;
   font-size: 12px;

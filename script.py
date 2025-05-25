@@ -66,7 +66,7 @@ else:
 
 context = ssl.create_default_context()
 try:
-    with open("image/cologne .jpeg", "rb") as img_file:
+    with open("my-app/src/image/cologne .jpeg", "rb") as img_file:
         img = MMI(img_file.read())
         img.add_header("Content ID", "image1")
         msg.attach(img)

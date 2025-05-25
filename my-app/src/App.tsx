@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import {spawn} from "node:child_process";
 
 function App() {
 
@@ -9,8 +10,31 @@ function App() {
     // d5c2ded4-4495-4e8b-ba83-aadb0fb03d44
 
 
+    // Update coin list with search input and highting
+    const getHighlightedText = (text: string, highlight: string) => {
+        const index = text.toLowerCase().indexOf(highlight.toLowerCase());
+        if (index === -1 || highlight == "") return text;
+
+        const before = text.slice(0, index);
+        const match = text.slice(index, index + highlight.length);
+        const after = text.slice(index + highlight.length);
+
+        return (
+        <>
+        {before}
+        <code style = {{ backgroundColor: "yellow", color: "black" }}>{match}</code>
+        {after}
+        </>
+        );
+    };
+
+
+
+
     // function CoinList() {
         const [coins, setCoins] = useState<string[]>([]);
+        const [input, setInput] = useState("");
+        const [isToggleInput, setIsToggleInput] = useState(false);
 
         useEffect(() => {
             const fetchCoins = async () => {
@@ -27,6 +51,20 @@ function App() {
         }, []);
     // }
 
+     const filteredCoins = coins.filter((coin) =>
+            coin.toLowerCase().includes(input.toLowerCase().trim())
+        )
+
+    const handToggler = () => {
+         setIsToggleInput((prev) => !prev);
+    };
+
+     const toggleHelp = () => {
+         const container = document.querySelector(".card-popup-container")
+         if(container && !container.classList.contains(".active")) {
+             container.classList.add("active")
+         }
+     }
 
 
     // send the input details to python for security
@@ -91,7 +129,50 @@ function App() {
 
 
   return (
+
     <header className="app_header">
+        <div className="card-popup-container">
+            <i className="fa-solid fa-times"></i>
+            <div className="card-container">
+                <div className="coin-name-list">
+                    <h6>Coins to Track</h6>
+                    <span
+                        className="fa-solid fa-search"
+                        onClick={handToggler}
+                    >
+                        {isToggleInput}
+                    </span>
+                </div>
+                <div className={`search-container ${isToggleInput ? "active" : ""}`}>
+                    <input
+                        type="text"
+                        placeholder="search coin.."
+                        onChange={(e) => setInput(e.target.value)}
+                        name="searchCoin"
+                        id="searchCoin"/>
+                </div>
+                <div className="coin-list-content">
+
+                    {filteredCoins.length > 0 ? (
+                        filteredCoins.map((coin, index) => (
+                            <li key={index}>{getHighlightedText(coin, input)}</li>
+                        ))
+                    ) : (
+                       <p style={{
+                           color: "#D3D1D14C",
+                           textAlign: "center",
+                           width: "100%",
+                           height: "100%",
+                           display: "flex",
+                           alignItems: "center",
+                           justifyContent: "center"
+                       }}> Coin not found.</p>
+                    )}
+
+                </div>
+            </div>
+        </div>
+
       <div className="main-container">
         <h2 className="App-name">Coin Tracker</h2>
         <p className="sub-text">Let cTracker update you for YOU!</p>
@@ -99,17 +180,24 @@ function App() {
 
             {step === 0 && (
           <div className={getClass(0)}>
+              <div className="input-container">
                <label
-                   htmlFor="coin-name" >
-               </label>
+                   htmlFor="coin-name" className="label-coin-name"> Enter your coin
+
               <input
                   type="text"
                   id="coin-name"
                   value={coinName}
                   onChange={(e) => setCoinName(e.target.value)}
-                  placeholder="Enter your Coin"
+                  placeholder="e.g, bitcoin"
                   className="coin-name"
               />
+               </label>
+                  <span className="help-icon" onClick={toggleHelp}>
+                      <i className="fa-solid fa-question"
+                         title="Check the available coin for Tracking">
+                      </i></span>
+              </div>
               <button
                   onClick={nextStep}
                   className="btn-first-action">
@@ -154,11 +242,8 @@ function App() {
             {step === 2 && (
             <div className={getClass(2)}>
                 <div className="price-update">
-                    <span className="price-alert" title={}>
+                    <span className="price-alert" >
                         Your <code>coin</code> current price is now <code>$2000</code>
-                        {coins.map((coins, index) => (
-                            <li key={index}>{coins} </li>
-                        ))}
 
                     </span>
                 </div>
