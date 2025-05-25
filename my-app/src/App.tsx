@@ -13,7 +13,7 @@ function App() {
     // Update coin list with search input and highting
     const getHighlightedText = (text: string, highlight: string) => {
         const index = text.toLowerCase().indexOf(highlight.toLowerCase());
-        if (index === -1 || highlight == "") return text;
+        if (index === -1 || highlight === "") return text;
 
         const before = text.slice(0, index);
         const match = text.slice(index, index + highlight.length);
@@ -22,7 +22,7 @@ function App() {
         return (
         <>
         {before}
-        <code style = {{ backgroundColor: "yellow", color: "black" }}>{match}</code>
+        <span style = {{ backgroundColor: "white", color: "black" }}>{match}</span>
         {after}
         </>
         );
@@ -35,6 +35,7 @@ function App() {
         const [coins, setCoins] = useState<string[]>([]);
         const [input, setInput] = useState("");
         const [isToggleInput, setIsToggleInput] = useState(false);
+        const [showPopup, setShowPopup] = useState(false);
 
         useEffect(() => {
             const fetchCoins = async () => {
@@ -59,12 +60,9 @@ function App() {
          setIsToggleInput((prev) => !prev);
     };
 
-     const toggleHelp = () => {
-         const container = document.querySelector(".card-popup-container")
-         if(container && !container.classList.contains(".active")) {
-             container.classList.add("active")
-         }
-     }
+
+     const openPopup = () => setShowPopup(true)
+     const closePopup = () => setShowPopup(false)
 
 
     // send the input details to python for security
@@ -111,8 +109,33 @@ function App() {
 
 
 
+    // inputChange function page first
+    const [status, setStatus] = useState<"valid" | "inValid" | "">("")
 
     // action button, move next | back
+    const contNextStep = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.toLowerCase().trim();
+        setCoinName(value)
+
+        if (value === ""){
+            setStatus("")
+            return
+        }
+
+        const isValid = coins.some((coin) =>
+            coin.toLowerCase().trim() === value
+        );
+        // console.log(value)
+        setStatus(isValid ? "valid" : "inValid");
+    };
+
+
+    const handleNext = () => {
+            if(status === "valid") {
+                nextStep();
+            }
+        }
+
     const nextStep = () => {
         setDirection("next")
         setSteps(prev => Math.max(prev + 1, 0));
@@ -131,11 +154,11 @@ function App() {
   return (
 
     <header className="app_header">
-        <div className="card-popup-container">
-            <i className="fa-solid fa-times"></i>
-            <div className="card-container">
+        <div className={`card-popup-container ${showPopup ? "active" : ""}`} onClick={closePopup}>
+            <i className="fa-solid fa-times" onClick={closePopup}></i>
+            <div className={`card-container ${showPopup ? "active" : ""}`} onClick={(e) => e.stopPropagation()}>
                 <div className="coin-name-list">
-                    <h6>Coins to Track</h6>
+                    <h6>Available coins</h6>
                     <span
                         className="fa-solid fa-search"
                         onClick={handToggler}
@@ -180,7 +203,11 @@ function App() {
 
             {step === 0 && (
           <div className={getClass(0)}>
-              <div className="input-container">
+              <div className="input-container" style={{
+                  border: status === "valid" ? "1px solid green":
+                          status === "inValid" ? "1px solid red":
+                                      "0",
+              }}>
                <label
                    htmlFor="coin-name" className="label-coin-name"> Enter your coin
 
@@ -188,19 +215,52 @@ function App() {
                   type="text"
                   id="coin-name"
                   value={coinName}
-                  onChange={(e) => setCoinName(e.target.value)}
+                  onChange={contNextStep}
                   placeholder="e.g, bitcoin"
                   className="coin-name"
+
               />
                </label>
-                  <span className="help-icon" onClick={toggleHelp}>
-                      <i className="fa-solid fa-question"
+                  <span className="help-icon"
+                        onClick={openPopup}
+                        style={{
+                             backgroundColor: status === "valid" ? "green":
+                                              status === "inValid" ? "rgba(57, 57, 58, 0.6)":
+                                              "rgba(57, 57, 58, 0.6)",
+                             pointerEvents: status === "valid" ? "none":
+                                            status === "inValid" ? "auto":
+                                                "auto",
+                             cursor: status === "valid" ? "none":
+                                     status === "inValid" ? "pointer":
+                                        "pointer",
+                         }}>
+
+                      <i className={`${status === "valid" ? "fa-solid fa-check":
+                                       status === "inValid" ? "fa-solid fa-question": "fa-solid fa-question"}`}
                          title="Check the available coin for Tracking">
                       </i></span>
               </div>
+              {status === "valid" && <p className="p-error-field" style={{color: "lightgreen", textAlign: "left"}}><i className="fa-solid fa-info-circle"></i> Coin Found</p>}
+              {status === "inValid" && <p className="p-error-field" style={{color: "#ff5757"}}><i className="fa-solid fa-info-circle"></i> Coin not Found</p>}
               <button
-                  onClick={nextStep}
-                  className="btn-first-action">
+                  disabled={status === "inValid"}
+                  onClick={handleNext}
+                  className="btn-first-action"
+                  style={{
+                      backgroundColor: status === "valid" ? "#282c34":
+                                       status === "inValid" ? "lightgrey":
+                                           "lightgrey",
+                      pointerEvents: status === "valid" ? "auto":
+                                     status === "inValid" ? "none":
+                                         "none",
+                      cursor: status === "valid" ? "pointer":
+                              status === "inValid" ? "none":
+                                  "none",
+
+
+
+                  }}
+              >
                   Continue
                   <i className="fa-solid fa-chevron-right"></i>
               </button>

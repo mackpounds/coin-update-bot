@@ -23,6 +23,7 @@
   top: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -30,19 +31,24 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   opacity: 0;
-  scale: 0.8;
-  transition: all 0.5s ease;
   pointer-events: none;
   z-index: -1;
 }
 .card-popup-container.active{
-  scale: 1;
   opacity: 1;
   z-index: 10;
-  transition: all 0.5s ease;
   pointer-events: auto;
 }
+.card-popup-container .fa-times{
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  font-size: 20px;
+  cursor: pointer;
+}
 .card-container{
+  opacity: 0;
+  scale: 0.7;
   width: 270px;
   height: 87dvh;
   padding: 0 0 38px 0;
@@ -52,10 +58,17 @@
   background-image: url("./image/background-noise.png");
   background-repeat: repeat;
   overflow: hidden;
+  transition: all 0.5s ease;
+}
+.card-container.active{
+  opacity: 1;
+  scale: 1;
+  transition: all 0.5s ease;
+  z-index: 10;
 }
 .coin-name-list{
   width: 100%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(203, 243, 197, 0.3);
   background-color: rgba(0, 0, 0, 0.1);
   padding: 10px 8px;
   display: flex;
@@ -136,7 +149,7 @@
   font-size: 13px;
   letter-spacing: 2px;
 }
-i{
+i, .p-error-field{
   font-size: 12px;
 }
 
@@ -203,6 +216,7 @@ i{
   /*background-color: #6c7c89;*/
   font-family: monospace;
   color: #282c34;
+  background-color: #ccc;
 }
 ::placeholder{
     font-family: "Montserrat Alternates", sans-serif;
@@ -216,9 +230,9 @@ i{
   border-radius: 7px;
   display: flex;
   justify-content: space-between;
-  background-color: white;
   gap: 5px;
   align-items: end;
+  background-color: #ccc;
 }
 .input-container input{
   width: 90%;
@@ -267,8 +281,8 @@ i{
 }
  button:hover{
    background-color: azure;
-   color: #282c34;
-   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 10px rgba(55, 225, 225, 0.4);
+   color: #757474;
+   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 10px rgba(94, 94, 94, 0.4);
    transition: all 0.3s ease;
  }
 .price-update {
