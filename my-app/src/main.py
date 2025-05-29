@@ -1,11 +1,16 @@
 from flask import Flask, request, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import requests
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)   #Allow requests from React frontend
+# CORS(app, resources={r"/submit": {"origins": "https://your-frontend-domain.com"}})
+limiter = Limiter(get_remote_address, app=app)
 
 @app.route("/submit", methods=["POST"])
+@limiter.limit("10 per minute")
 def submit():
     data = request.json
     print("Received data:", data)

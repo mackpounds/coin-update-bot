@@ -8,6 +8,8 @@
 .app_header {
   width: 100%;
   background-color: #282c34;
+  background-image: url("image/bg-noise-home.png");
+  background-repeat: repeat;
   padding: 40px;
   min-height: 100vh;
   display: flex;
@@ -16,6 +18,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+
 }
 
 .card-popup-container{
@@ -130,6 +133,8 @@
   min-height: 300px;
   border-radius: 15px;
   background-color: #6c7c89;
+  background-image: url("./image/background-noise.png");
+  background-repeat: repeat;
   padding: 16px;
   line-height: 20px;
   display: flex;
@@ -149,8 +154,20 @@
   font-size: 13px;
   letter-spacing: 2px;
 }
-i, .p-error-field{
+i, .p-error-field, .p-success-field{
   font-size: 12px;
+}
+.p-error-field{
+  margin-top: -6px;
+  width: 100%;
+  text-align: left;
+  color: #FF5757;
+}
+.p-success-field{
+  margin-top: -6px;
+  width: 100%;
+  text-align: left;
+  color: #435a45;
 }
 
 .coin-name-content{
@@ -214,7 +231,7 @@ i, .p-error-field{
   outline: none;
   caret-color: #282c34;
   /*background-color: #6c7c89;*/
-  font-family: monospace;
+  font-family: ".SF NS Mono", sans-serif;
   color: #282c34;
   background-color: #ccc;
 }
@@ -241,7 +258,7 @@ i, .p-error-field{
   border-radius: 7px;
   outline: none;
   caret-color: #282c34;
-  font-family: monospace;
+  font-family: ".SF NS Mono", sans-serif;
   background-color: transparent;
   color: #282c34;
 }
@@ -250,6 +267,7 @@ i, .p-error-field{
   height: 25px;
   display: flex;
   align-items: center;
+  text-align: center;
   justify-content: center;
   /*padding: 5px;*/
   border-radius: 100vw;
@@ -281,7 +299,7 @@ i, .p-error-field{
 }
  button:hover{
    background-color: azure;
-   color: #757474;
+   color: #282c34;
    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 10px rgba(94, 94, 94, 0.4);
    transition: all 0.3s ease;
  }
@@ -298,12 +316,18 @@ i, .p-error-field{
   line-height: 30px;
 }
 
- .label-coin-name, .label-holding-coin, .label-email, .label-password, .label-confirm-pass, .label-threshold-up , .label-threshold-down, .threshold-info, .code-label, .code-info{
+ .label-coin-name, .label-holding-coin, .label-email, .label-password, .label-confirm-pass, .label-threshold-up , .label-threshold-down, .code-label, .code-info{
    width: 100%;
    text-align: start;
   font-size: 12px;
-  line-height: 17px;
+  line-height: 22px;
 }
+ .threshold-info{
+   width: 100%;
+   text-align: start;
+  font-size: 12px;
+  line-height: 16px;
+ }
 
  input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button{
    -webkit-appearance: none;
