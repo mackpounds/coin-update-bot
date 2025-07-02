@@ -68,9 +68,9 @@ def compose_msg(last_price, alert_type="up"):
 
 def send_mail(html, last_price):
     msg = MM('alternative')
-    sender = 'igiliegbepatrick@gmail.com'
-    receiver = 'tispend55@gmail.com'
-    password = 'qshffaeoblrvghqq'
+    sender = '@gmail.com'
+    receiver = '@gmail.com'
+    password = ''
 
     msg['Subject'] = "Crypto Price Alert"
     msg['from'] = sender
